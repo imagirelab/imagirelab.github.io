@@ -8,7 +8,7 @@
     <title>Imagire Lab. - member -</title>
 
     <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
   <style type="text/css">
   body { padding-top: 210px; }
   @media ( min-width: 768px ) {
@@ -119,24 +119,19 @@ footer .github-star-button {
 
   <div class="container">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-7">
         <h3>研究背景</h3>
         <p>VR FPSゲームで後ろの人を撃ちたいですよね。もしくは周り人と一度にコミュニケーションをとりたい時があるのではないでしょうか。
-          これらを実現する分野は視野拡張になります。視野拡張はまだまだ実用化されているとは言えません。
+          これらを実現する分野は視野拡張になります。視野拡張はまだまだ定着しているとは言えません。
       </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row">        
-      <div class="col-xs-2"></div>
-      <div class="col-xs-8">
-        <p>
+      <div class="col-xs-5">
         <div class="embed-responsive embed-responsive-16by9">        
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/ym0vkhY6y-Q?autoplay=1&mute=1&playsinline=1&loop=1&playlist=ym0vkhY6y-Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/ym0vkhY6y-Q?autoplay=1&mute=1&playsinline=1&loop=1&playlist=ym0vkhY6y-Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
+        <p class="text-center"> 
+          HMDをかぶって後ろの人に手を振る人。
         </p>
       </div>
-      <div class="col-xs-2"></div>
     </div>
   </div>
 
@@ -156,8 +151,9 @@ footer .github-star-button {
         </p>
       </div>
       <div class="col-xs-4">
-        <p>
-        <img src="digraj12th_exbi.jpg" class="img-fluid" alt="CHiKaフェスでのVR展示">
+        <img src="digraj12th_exbi.jpg" class="img-responsive" alt="CHiKaフェスでのVR展示">
+        <p class="text-center">
+          CHiKaフェスでのVR展示
         </p>
       </div>
     </div>
@@ -172,32 +168,33 @@ footer .github-star-button {
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-xs-10">
+      <div class="col-xs-9">
         <p>
           今回、HMDとしてOculus Quest 2を使い、その上ににヘルメットストラップマウントで
-          360度カメラのRICOH THETAを取り付けました（図では、RICOH THETA Vを設置）。
+          360度カメラのRICOH THETAを取り付けました。
           Oculus Quest 2は、Android OS で動いているので、HTTP通信で直接THETAと通信して、
           THETAの360度映像を直接取り込んで加工することは可能に思うのですが、
           試してもなかなか上手くいきませんでした
           (調べると、THETAのAPI実装の問題という記事が見つかるのですが現時点では原因は判明していません)。
         </p>
       </div>
-      <div class="col-xs-2">
-         <img src="digraj12th_HMD.jpg" class="img-responsive" alt="視野拡張システムHMD">
+      <div class="col-xs-3">
+          <img src="digraj12th_HMD.jpg" class="img-responsive" alt="視野拡張システムHMD">
+          <p>今回のシステムのHMD周辺。360度カメラはRICOH THETA V。</p>
       </div>
     </div>
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-xs-10">
+      <div class="col-xs-8">
         <p>
           現時点では、外部にPCを用意して、外部PCからHTTP通信でTHETAの画像を取得しています。
           トンボの視覚への変換はOculus Quest 2でも可能ですが、PCからHMDに映像を送れる「Oculus Link」の機能が便利なので、
           Quest 2の情報を外部PCで受け取って映像のレンダリングを行った結果を、Oculus で表示しています。
         </p>
       </div>
-      <div class="col-xs-2">
-         <img src="digraj12th_system.jpg"  class="img-responsive" alt="視野拡張システム">
+      <div class="col-xs-4">
+          <img src="digraj12th_system.png"  class="img-responsive" alt="視野拡張システム">
       </div>
     </div>
   </div>
@@ -205,9 +202,40 @@ footer .github-star-button {
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <h3>実装</h3>
-        
+        <h3>実装: トンボの視覚</h3>
       </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-8">
+        <p>
+          トンボには単眼もあるものの、教育的な分かりやすさとして複眼を再現しています。
+          また、複眼であることが分かりやすいように、あえて個眼の間を中央の位置ではっきりと分けています。
+        </p>
+        <p>
+          トンボは2万個程度の個眼の集合である複眼を持っていることが知られていますが、それぞれの個眼では、特定の方向の光をとらえ、周囲を認識しています。
+          今回は、複眼における個眼の配置を半球上の一様な点群の分布として再現しました（約1万個の点を半球上に等間隔に初期配置し、周囲の点との斥力を働かせる球面上のロイド緩和[3]のシミュレーションを用いて均等な間隔に配置しています）。
+        </p>
+      </div>
+      <div class="col-xs-4">
+          <img src="digraj12th_sampling.png"  class="img-responsive" alt="目のサンプリング点">
+          <p>個眼の配置。片目だけ計算し、反対側の目は対称な位置に配置した。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>
+          配置した個眼の位置情報はキューブマップに保存しました。
+          キューブマップの各画素に最も近い個眼の減点からの向きを記録しています。
+          キューブマップは、圧縮誤差を避けるためと符号付きフォーマットを使う理由から、実行時の最初に個眼の位置情報から作成しています。
+        </p>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-xs-12">
         <img src="digraj12th_XP.png" class="img-fluid" alt="X+">
         <img src="digraj12th_XN.png" class="img-fluid" alt="X-">
@@ -215,8 +243,38 @@ footer .github-star-button {
         <img src="digraj12th_YN.png" class="img-fluid" alt="Y-">
         <img src="digraj12th_ZP.png" class="img-fluid" alt="Z+">
         <img src="digraj12th_ZN.png" class="img-fluid" alt="Z-">
+        <p>
+          キューブマップの可視化。x, y, z成分を赤、緑、青で表示。
+        </p>
       </div>
-          
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-8">
+        <p>
+          複眼による広範囲な視界を一度にとらえるため、視線方向を拡張しています。
+          描画する画素の視点からの角度を3倍にして、上記個眼の位置情報のキューブマップや360度カメラからの画像を読み込んでいます。
+
+        </p>
+      </div>
+      <div class="col-xs-4">
+          <img src="digraj12th_view.png"  class="img-responsive" alt="視野拡張">
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>
+          トンボの視覚の再現には、Futahashiら[4]の研究を応用しました。
+          アキアカネ等は、背側の個眼と腹側の個眼で色覚が異なるため、個眼の向きの鉛直方向を見て、色覚を分けています。
+          また、色を認識するオプシン遺伝子は複数の異なる種類を保持しています。
+          今回は、個眼の向きに応じてランダムに反応する色を変えました。
+        </p>
+      </div>
     </div>
   </div>
 
@@ -224,19 +282,55 @@ footer .github-star-button {
     <div class="row">
       <div class="col-xs-12">
         <h3>結果</h3>
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/gQaTvdF6NM0?autoplay=1&mute=1&playsinline=1&loop=1&playlist=gQaTvdF6NM0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
+        <p>
+          人間と視覚とトンボの視覚を切り替えながら歩いた映像です。
+          制作したソフトウェアである Unity(2021.2.7f1) の画面をキャプチャーしました。
+          360度カメラは、RICOH THETA Z1で、、Motion JPEGフォーマットの1920 x 960ライブビュー解像度のパノラマ画像を連続的に取得しています。
+        </p>
+        <p>
+          人間と視覚とトンボの視覚を比較すると、トンボの方が一度に広い範囲が見えています。
+          トンボは背側はほとんど影しか見えず（鳥などの捕食者が近づいてきた際に影となってすぐにわかるようにと言われています）、
+          腹側は遠目で見るとそれらしい色（獲物を捕まえるために多彩な色が見えていると言われています）に見えるハニカム構造の視覚となります。
+        </p>
+        <p>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/gQaTvdF6NM0?autoplay=1&mute=1&playsinline=1&loop=1&playlist=gQaTvdF6NM0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </p>
       </div>
     </div>
   </div>
+    
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+      <img src="digraj12th_human.png" class="img-responsive" alt="人間の視覚での屋外">
+      <p>
+        人間の視覚での屋外。
+      </p>
+    </div>
+    <div class="col-xs-6">
+      <img src="digraj12th_dragonfly.png" class="img-responsive" alt="トンボの視覚での屋外">
+      <p>
+        左と同じ場所でのトンボの視覚の結果。
+      </p>
+    </div>
+  </div>
+</div>
+
 
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <h3>今後について</h3>
-
+        <h3>今後の課題</h3>
+        今回のものは、まだまだ良くできると思っています。
+        <ul>
+          <li>HMDや360度カメラの他に必要なPCをなくす</li>
+          <li>Motion JPEGフォーマットの取り扱いが重ので高速化する</li>
+          <li>トンボの色覚の再現なので、その後の脳の処理を踏まえた場合の最適な再現方法を検討</li>
+          <li>個眼のレイアウトなど、実際のトンボの情報を用いた高品質化</li>
+          <li>VR酔い対策</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -291,6 +385,6 @@ footer .github-star-button {
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>
