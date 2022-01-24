@@ -145,7 +145,8 @@ footer .github-star-button {
           我々は、<a href="https://collab.t-kougei.ac.jp/2nd-exhibition/">「カラボギャラリー第2回企画展-色覚を考える展」</a>[1]
           や<a href="https://www.setagaya-ldc.net/program/516/">生活工房ギャラリー「色覚を考える展-ヒトと動物の色世界-」</a>[2]
           で、視野拡張の応用アプリケーションとしてトンボになって世界を覗き込むVR作品を展示してきました。
-          これらの展示では、事前に用意した動画をヘッドマウントディスプレイ(HMD)の向きに応じてトンボの視覚に変換をしていました。<br>
+          これらの展示では、事前に用意した動画をヘッドマウントディスプレイ(HMD)の向きに応じてトンボの視覚に変換をしていました。
+        </p><p>
           ただ、展示をしている中で気になることがありました。何人かの体験者はHMDの前で手を振っていたのです。
           様子を見ると、手を振って自分が入りこむのか試してみて、手が映らないことを確認すると、
           中の映像は現在の景色とは関係ないあらかじめ用意された動画なのだと認識しているようでした。
@@ -157,10 +158,27 @@ footer .github-star-button {
       </div>
     </div>
   </div>
+
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
         <h3>提案法</h3>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-10">
+        <p>
+          今回、HMDとしてOculus Quest 2を使い、その上ににヘルメットストラップマウントで
+          360度カメラのRICOH THETAを取り付けました（図では、RICOH THETA Vを設置）。
+          Oculus Quest 2は、Android OS で動いているので、HTTP通信で直接THETAと通信して、
+          THETAの360度映像を直接取り込んで加工することは可能に思うのですが、
+          試してもなかなか上手くいきませんでした
+          (調べると、THETAのAPI実装の問題という記事が見つかるのですが現時点では原因は判明していません)。
+        </p>
+      <div class="col-xs-2">
+         <img src="digraj12th_system.jpg" class="img-fluid" alt="視野拡張システム">
       </div>
     </div>
   </div>
